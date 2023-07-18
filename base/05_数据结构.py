@@ -184,4 +184,7 @@ dict([('sape', 4139), ('guido', 4127), ('jack', 4098)])
 dict(sape=4139, guido=4127, jack=4098)
 
 
-# 5.6
+# 在字典中循环，用 items() 方法可同时取出键和对应的值
+knights = {'gallahad': 'the pure', 'robin': 'the brave'}
+for k, v in knights.items():
+    print(k, v)
