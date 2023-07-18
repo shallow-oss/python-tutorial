@@ -186,5 +186,47 @@ dict(sape=4139, guido=4127, jack=4098)
 
 # 在字典中循环，用 items() 方法可同时取出键和对应的值
 knights = {'gallahad': 'the pure', 'robin': 'the brave'}
-for k, v in knights.items():
-    print(k, v)
+for key, value in knights.items():
+    print(key, value)
+
+# 在序列中循环时，用 enumerate() 函数可以同时取出位置索引和对应的值
+list = ['tic', 'tac', 'toe']
+for index, value in enumerate(list):
+    print(index, value)
+
+# 同时循环两个或多个序列时，用 zip() 函数可以将其内的元素一一匹配，有多出来的并不会匹配，只会匹配相同个数元素
+questions = ['name', 'quest', 'favorite color','ppp']
+answers = ['lancelot', 'the holy grail', 'blue']
+for q, a in zip(questions, answers):
+    print('What is your {0}?  It is {1}.'.format(q, a))
+
+# 逆向循环序列，先正向定位序列，然后调用 reversed() 函数
+for i in reversed(range(1, 10, 2)):
+    print(i)
+
+# 按指定顺序循环序列，可以用 sorted() 函数，在不改动原序列的基础上，返回一个重新的序列
+basket = ['apple', 'orange', 'apple', 'pear', 'orange', 'banana']
+print(sorted(basket))
+for i in sorted(basket):
+    print(i)
+
+# 使用 set() 去除序列中的重复元素
+# 使用 sorted() 加 set() 则按排序后的顺序，循环遍历序列中的唯一元素
+basket = ['apple', 'orange', 'apple', 'pear', 'orange', 'banana']
+for f in sorted(set(basket)):
+    print(f)
+
+# 在循环中修改列表的内容时，创建新列表比较简单，且安全
+import math
+raw_data = [56.2, float('NaN'), 51.7, 55.3, 52.5, float('NaN'), 47.8]
+filtered_data = []
+for value in raw_data:
+    if not math.isnan(value):
+        filtered_data.append(value)
+print(filtered_data)
+
+# 序列和其他类型的比较
+# 字典式 顺序
+# 首先，比较前两个对应元素，如果不相等，则可确定比较结果；如果相等，则比较之后的两个元素，以此类推，直到其中一个序列结束。
+# 如果两个序列中所有的对应元素都相等，则两个序列相等。
+# 如果一个序列是另一个的初始子序列，则较短的序列可被视为较小（较少）的序列。 
