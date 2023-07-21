@@ -17,3 +17,7 @@ print(np.add(B, np.add(C, D)))
 # ceil， clip， conj， corrcoef， cov， cross， cumprod， cumsum， diff， dot， floor，
 # inner， INV ， lexsort， max， maximum， mean， median， min， minimum， nonzero，
 # outer， prod， re， round， sort， std， sum， trace， transpose， var， vdot， vectorize， where
+
+# np.floor(x)
+# x 是一个数组或标量
+# 对数组中的元素进行向下取整操作,返回不大于输入值的最大整数
