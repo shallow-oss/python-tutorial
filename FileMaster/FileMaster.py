@@ -10,8 +10,7 @@ class FileTerminal(cmd.Cmd):
     path = os.getcwd()
 
     def do_pwd(self, arg):
-        path = self.path
-        print(path)
+        print(self.path)
 
     def do_ls(self, arg):
         # 获取当前目录
@@ -55,6 +54,30 @@ class FileTerminal(cmd.Cmd):
         except FileNotFoundError:
             print("File is not Found.")
 
+    def do_mv(self, args):
+        file_name, directory = args.split()
+        shutil.move(file_name, directory)
+
+    def do_touch(self, args):
+        fileNames = args.split()
+        for file_name in fileNames:
+            if os.path.exists(file_name):
+                covered = input("file is exists,Is it covered?[Y/n]")
+                if covered.lower() == 'y':
+                    file = open(file_name, "w")
+                    file.close()
+            else:
+                file = open(file_name, "w")
+                file.close()
+
+    def do_cat(self, arg):
+        try:
+            with open(arg, 'r', encoding='utf-8') as file:
+                content = file.read()
+                print(content)
+        except FileNotFoundError:
+            print("文件不存在！")
+
     def do_quit(self, arg):
         """退出终端"""
         return True
@@ -62,18 +85,27 @@ class FileTerminal(cmd.Cmd):
     def do_help(self, arg):
         if arg:
             # 处理特定命令的帮助信息
-            if arg == "pwd":
-                print("print name of current/working directory.")
-            elif arg == "ls":
-                print("list directory contents.")
-            elif arg == "cd":
-                print("Change the working directory.")
-            elif arg == 'mkdir':
-                print('make directories.')
-            elif arg == 'rm':
-                print('remove files or directories.')
-            else:
-                print("Unknown command:", arg)
+            match arg:
+                case 'pwd':
+                    print("print name of current/working directory.")
+                case 'ls':
+                    print("list directory contents.")
+                case 'cd':
+                    print("Change the working directory.")
+                case 'mkdir':
+                    print('make directories.')
+                case 'rm':
+                    print('remove files or directories.')
+                case 'cp':
+                    print('copy file.')
+                case 'mv':
+                    print('move files or directories.')
+                case 'touch':
+                    print('create null files.')
+                case 'cat':
+                    print('print file on the standard output.')
+                case _:
+                    print("Unknown command:", arg)
         else:
             # 显示所有命令的帮助信息
             print("Available commands:")
@@ -82,6 +114,10 @@ class FileTerminal(cmd.Cmd):
             print("  cd - Change the working directory")
             print('  mkdir - make directories')
             print('  rm - remove files or directories')
+            print('  cp - copy file')
+            print('  mv - move files or directories')
+            print('  touch - create null files')
+            print('  cat - print file on the standard output')
             print("  quit - Exit the program")
 
 
