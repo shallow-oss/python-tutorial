@@ -76,7 +76,7 @@ class FileTerminal(cmd.Cmd):
                 content = file.read()
                 print(content)
         except FileNotFoundError:
-            print("文件不存在！")
+            print("File is not Found!")
 
     def do_quit(self, arg):
         """退出终端"""
