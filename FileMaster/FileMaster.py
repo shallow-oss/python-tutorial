@@ -22,11 +22,13 @@ class FileTerminal(cmd.Cmd):
             os.path.join(current_dir, item))]
         files = [item for item in items if os.path.isfile(
             os.path.join(current_dir, item))]
+        # 显示文件夹和文件
         print(f"Folder：{' '.join(folder for folder in folders)}")
         print(f"File：{' '.join(file for file in files)}")
 
     def do_cd(self, arg):
         try:
+            # 改变当前工作目录
             os.chdir(arg)
         except FileNotFoundError:
             print("File Not Found,Please try again!")
@@ -40,6 +42,7 @@ class FileTerminal(cmd.Cmd):
 
     def do_rm(self, arg):
         if os.path.isfile(arg):
+            # 删除文件
             os.remove(arg)
         elif os.path.isdir(arg):
             # 如果是文件夹，先删除文件夹内的内容，然后删除文件夹本身
@@ -48,15 +51,22 @@ class FileTerminal(cmd.Cmd):
             print("Folder or File is not exist.")
 
     def do_cp(self, args):
-        file_name, directory = args.split()
         try:
+            file_name, directory = args.split()
             shutil.copy(file_name, directory)
         except FileNotFoundError:
             print("File is not Found.")
+        except ValueError:
+            print("Please try again!")
+            print("example: cp FILE DIRECTORY")
 
     def do_mv(self, args):
-        file_name, directory = args.split()
-        shutil.move(file_name, directory)
+        try:
+            file_name, directory = args.split()
+            shutil.move(file_name, directory)
+        except ValueError:
+            print("Please try again!")
+            print("example: mv FILE DIRECTORY")
 
     def do_touch(self, args):
         fileNames = args.split()
@@ -92,18 +102,25 @@ class FileTerminal(cmd.Cmd):
                     print("list directory contents.")
                 case 'cd':
                     print("Change the working directory.")
+                    print("    ex: cd DIRECTORY")
                 case 'mkdir':
                     print('make directories.')
+                    print('    ex: mkdir DIRECTORY')
                 case 'rm':
                     print('remove files or directories.')
+                    print('    ex: rm FILE')
                 case 'cp':
                     print('copy file.')
+                    print('    ex: cp FILE DIRECTORY')
                 case 'mv':
                     print('move files or directories.')
+                    print('    ex: mv FILE DIRECTORY')
                 case 'touch':
                     print('create null files.')
+                    print('    ex: touch FILE ...')
                 case 'cat':
                     print('print file on the standard output.')
+                    print('    ex: cat FILE')
                 case _:
                     print("Unknown command:", arg)
         else:
