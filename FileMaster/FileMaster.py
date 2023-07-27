@@ -1,6 +1,7 @@
 import cmd
 import os
 import shutil
+import re
 
 
 class FileTerminal(cmd.Cmd):
@@ -87,6 +88,14 @@ class FileTerminal(cmd.Cmd):
                 print(content)
         except FileNotFoundError:
             print("File is not Found!")
+
+    def do_sed(self, args):
+        command, file = args.split()
+        command = command.strip("'")
+        match = re.search(r'/(?P<reg>.*?)/', command)
+        if match:
+            command = match.group('reg')
+        print(command, file)
 
     def do_quit(self, arg):
         """退出终端"""
