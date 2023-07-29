@@ -1,9 +1,9 @@
 # python-tutorial
 
-## [python 官方文档](https://docs.python.org/zh-cn/3/)
+  1. [python 官方文档](https://docs.python.org/zh-cn/3/)
 
-## [NumPy 官方文档](https://www.numpy.org.cn/user/quickstart.html)
+  2. [NumPy 官方文档](https://www.numpy.org.cn/user/quickstart.html)
 
-## [matplotlib 官方文档](https://matplotlib.org/stable/tutorials/index)
+  3. [matplotlib 官方文档](https://matplotlib.org/stable/tutorials/index)
 
-## [Pandas 官方文档](https://www.pypandas.cn/docs/)
+  4. [Pandas 官方文档](https://www.pypandas.cn/docs/)
