@@ -16,3 +16,14 @@ iterator = p.finditer('12 drummers drumming, 11 ... 10 ...')
 print(iterator)
 for match in iterator:
     print(match)
+
+p = re.compile('.')
+print(p.match('asdad'))
+
+p = re.compile(r'\bclass\b')
+print(p.search('no class at all'))
+
+p = re.compile("(^From): (.+)")
+print(p.match('From: author@example.com').group(0))
+print(p.match('From: author@example.com').group(1))
+print(p.match('From: author@example.com').group(2))
