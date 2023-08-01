@@ -1,7 +1,7 @@
 '''
 use for GitHub520 project auto flush
+power shell
 '''
-
 
 import subprocess
 import requests
@@ -51,10 +51,10 @@ with open(host_file_path, 'w') as file:
     file.writelines(lines)
     file.write(host_content)
 
-print("内容已成功写入host文件。")
+print("host content is successfully writing.")
 
 
 # 执行 ipconfig /flushdns 命令
 subprocess.run(['ipconfig', '/flushdns'], capture_output=True, text=True)
 
-print("DNS缓存已成功刷新。")
+print("DNS successfully refreshed.")
