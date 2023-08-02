@@ -2,6 +2,7 @@ import cmd
 import os
 import shutil
 import re
+from Sed import sed
 
 
 class FileTerminal(cmd.Cmd):
@@ -90,7 +91,13 @@ class FileTerminal(cmd.Cmd):
             print("File is not Found!")
 
     def do_sed(self, args):
-        pass
+        print(args)
+        try:
+            command, file_name = args.split()
+            sed(command, file_name)
+        except ValueError:
+            print("Please try again!")
+            print("example: sed COMMAND FILE")
 
     def do_quit(self, arg):
         """退出终端"""
@@ -125,6 +132,9 @@ class FileTerminal(cmd.Cmd):
                 case 'cat':
                     print('print file on the standard output.')
                     print('    ex: cat FILE')
+                case 'sed':
+                    print('txt editor.')
+                    print('    ex: sed COMMAND FILE')
                 case _:
                     print("Unknown command:", arg)
         else:
@@ -139,6 +149,7 @@ class FileTerminal(cmd.Cmd):
             print('  mv - move files or directories')
             print('  touch - create null files')
             print('  cat - print file on the standard output')
+            print('  sed - txt editor')
             print("  quit - Exit the program")
 
 

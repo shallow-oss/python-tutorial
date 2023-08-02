@@ -28,19 +28,21 @@ def sed(command, file_name):
                 "unicode_escape").decode() if command[0] == 's' else ''
             new_content = re.sub(pattern, replacement, content)
             saveContent(file_name, new_content)
-        case 'i':
-            print('匹配行前追加文本')
-            pass
-        case 'a':
-            print('匹配行后追加文本')
-            pass
+        case 'i' | 'a':
+            content = getContent(file_name)
+            pattern = command[1].encode("unicode_escape").decode()
+            insert = command[2] + \
+                command[1] if command[0] == 'i' else command[1] + command[2]
+            insert = insert.encode("unicode_escape").decode()
+            new_content = re.sub(pattern, insert, content)
+            saveContent(file_name, new_content)
         case _:
             print('输入错误')
             pass
 
 
-sed('s/[0-9]/NUM', 'FileMaster\File.txt')
-sed('d/NUM', 'FileMaster\File.txt')
-sed('i/pattern/inserted text', 'FileMaster\File.txt')
-sed('a/pattern/inserted text', 'FileMaster\File.txt')
-sed('ad/pattern/inserted text', 'FileMaster\File.txt')
+# sed('s/[0-9]/NUM', 'FileMaster\File.txt')
+# sed('d/NUM', 'FileMaster\File.txt')
+# sed('i/oceen/the ', 'FileMaster\File.txt')
+# sed('a/delicous/ meal', 'FileMaster\File.txt')
+# sed('ad/pattern/inserted text', 'FileMaster\File.txt')
