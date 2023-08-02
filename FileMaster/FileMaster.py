@@ -10,10 +10,10 @@ class FileTerminal(cmd.Cmd):
     prompt = '>> '
     path = os.getcwd()
 
-    def do_pwd(self, arg):
+    def do_pwd(self, _):
         print(self.path)
 
-    def do_ls(self, arg):
+    def do_ls(self, _):
         # 获取当前目录
         current_dir = self.path
         # 获取当前目录下的所有项（文件和文件夹）
@@ -27,10 +27,10 @@ class FileTerminal(cmd.Cmd):
         print(f"Folder：{' '.join(folder for folder in folders)}")
         print(f"File：{' '.join(file for file in files)}")
 
-    def do_cd(self, arg):
+    def do_cd(self, work_directory: str):
         try:
             # 改变当前工作目录
-            os.chdir(arg)
+            os.chdir(work_directory)
         except FileNotFoundError:
             print("File Not Found,Please try again!")
         except OSError:
@@ -38,20 +38,20 @@ class FileTerminal(cmd.Cmd):
         else:
             self.path = os.getcwd()
 
-    def do_mkdir(self, arg):
-        os.makedirs(os.path.join(self.path, arg))
+    def do_mkdir(self, dir_name: str):
+        os.makedirs(os.path.join(self.path, dir_name))
 
-    def do_rm(self, arg):
-        if os.path.isfile(arg):
+    def do_rm(self, file_name: str):
+        if os.path.isfile(file_name):
             # 删除文件
-            os.remove(arg)
-        elif os.path.isdir(arg):
+            os.remove(file_name)
+        elif os.path.isdir(file_name):
             # 如果是文件夹，先删除文件夹内的内容，然后删除文件夹本身
-            shutil.rmtree(arg)
+            shutil.rmtree(file_name)
         else:
             print("Folder or File is not exist.")
 
-    def do_cp(self, args):
+    def do_cp(self, args: str):
         try:
             file_name, directory = args.split()
             shutil.copy(file_name, directory)
@@ -61,7 +61,7 @@ class FileTerminal(cmd.Cmd):
             print("Please try again!")
             print("example: cp FILE DIRECTORY")
 
-    def do_mv(self, args):
+    def do_mv(self, args: str):
         try:
             file_name, directory = args.split()
             shutil.move(file_name, directory)
@@ -69,7 +69,7 @@ class FileTerminal(cmd.Cmd):
             print("Please try again!")
             print("example: mv FILE DIRECTORY")
 
-    def do_touch(self, args):
+    def do_touch(self, args: str):
         fileNames = args.split()
         for file_name in fileNames:
             if os.path.exists(file_name):
@@ -81,16 +81,15 @@ class FileTerminal(cmd.Cmd):
                 file = open(file_name, "w")
                 file.close()
 
-    def do_cat(self, arg):
+    def do_cat(self, file_name):
         try:
-            with open(arg, 'r', encoding='utf-8') as file:
+            with open(file_name, 'r', encoding='utf-8') as file:
                 content = file.read()
                 print(content)
         except FileNotFoundError:
             print("File is not Found!")
 
-    def do_sed(self, args):
-        print(args)
+    def do_sed(self, args: str):
         try:
             command, file_name = args.split()
             sed(command, file_name)
@@ -98,11 +97,11 @@ class FileTerminal(cmd.Cmd):
             print("Please try again!")
             print("example: sed COMMAND FILE")
 
-    def do_quit(self, arg):
+    def do_quit(self, _):
         """退出终端"""
         return True
 
-    def do_help(self, arg):
+    def do_help(self, arg: str):
         if arg:
             # 处理特定命令的帮助信息
             match arg:

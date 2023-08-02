@@ -1,7 +1,7 @@
 import re
 
 
-def getContent(file_name):
+def getContent(file_name: str):
     try:
         with open(file_name, 'r') as file:
             content = file.read()
@@ -10,7 +10,7 @@ def getContent(file_name):
         print("File is not Found.")
 
 
-def saveContent(file_name, content):
+def saveContent(file_name: str, content: str):
     try:
         with open(file_name, 'w') as file:
             file.write(content)
@@ -18,7 +18,7 @@ def saveContent(file_name, content):
         print("File is not Found.")
 
 
-def sed(command, file_name):
+def sed(command: str, file_name: str):
     command = command.split('/')
     match command[0]:
         case 's' | 'd':
