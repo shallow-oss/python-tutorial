@@ -38,11 +38,3 @@ def sed(command, file_name):
             saveContent(file_name, new_content)
         case _:
             print('输入错误')
-            pass
-
-
-# sed('s/[0-9]/NUM', 'FileMaster\File.txt')
-# sed('d/NUM', 'FileMaster\File.txt')
-# sed('i/oceen/the ', 'FileMaster\File.txt')
-# sed('a/delicous/ meal', 'FileMaster\File.txt')
-# sed('ad/pattern/inserted text', 'FileMaster\File.txt')
