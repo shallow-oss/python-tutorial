@@ -37,4 +37,10 @@ def sed(command: str, file_name: str):
             new_content = re.sub(pattern, insert, content)
             saveContent(file_name, new_content)
         case _:
-            print('输入错误')
+            print('Please try again！')
+
+
+sed('s/[0-9]+/NUM', 'FileMaster\File.txt')
+sed('d/(NUM)', 'FileMaster\File.txt')
+sed('3i/Test/I', 'FileMaster\File.txt')
+sed('a/Test/A', 'FileMaster\File.txt')
