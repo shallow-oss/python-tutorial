@@ -1,46 +1,69 @@
 import re
 
 
-def getContent(file_name: str):
+def Content(file_name: str, content: str = None):
     try:
-        with open(file_name, 'r') as file:
-            content = file.read()
-        return content
+        if content is None:
+            with open(file_name, 'r') as file:
+                content = file.read()
+                return content
+        else:
+            with open(file_name, 'w') as file:
+                file.write(content)
     except FileNotFoundError:
         print("File is not Found.")
 
 
-def saveContent(file_name: str, content: str):
-    try:
-        with open(file_name, 'w') as file:
-            file.write(content)
-    except FileNotFoundError:
-        print("File is not Found.")
+def i_insert(match, insert):
+    return ''.join([insert, match.group()])
 
 
-def sed(command: str, file_name: str):
-    command = command.split('/')
-    match command[0]:
-        case 's' | 'd':
-            content = getContent(file_name)
-            pattern = command[1].encode("unicode_escape").decode()
-            replacement = command[2].encode(
-                "unicode_escape").decode() if command[0] == 's' else ''
-            new_content = re.sub(pattern, replacement, content)
-            saveContent(file_name, new_content)
-        case 'i' | 'a':
-            content = getContent(file_name)
-            pattern = command[1].encode("unicode_escape").decode()
-            insert = command[2] + \
-                command[1] if command[0] == 'i' else command[1] + command[2]
-            insert = insert.encode("unicode_escape").decode()
-            new_content = re.sub(pattern, insert, content)
-            saveContent(file_name, new_content)
-        case _:
-            print('Please try again！')
+def insert_a(match, insert):
+    return ''.join([match.group(), insert])
 
 
-sed('s/[0-9]+/NUM', 'FileMaster\File.txt')
-sed('d/(NUM)', 'FileMaster\File.txt')
-sed('3i/Test/I', 'FileMaster\File.txt')
-sed('a/Test/A', 'FileMaster\File.txt')
+def s(pattern, replacement, file_name):
+    content = Content(file_name)
+    new_content = re.sub(pattern, replacement, content)
+    Content(file_name, new_content)
+
+
+def d(pattern, file_name):
+    content = Content(file_name)
+    new_content = re.sub(pattern, '', content)
+    Content(file_name, new_content)
+
+
+def i(pattern, insert, file_name):
+    content = Content(file_name)
+    new_content = re.sub(
+        pattern, lambda match: i_insert(match, insert), content)
+    Content(file_name, new_content)
+
+
+def a(pattern, insert, file_name):
+    content = Content(file_name)
+    new_content = re.sub(
+        pattern, lambda match: insert_a(match, insert), content)
+    Content(file_name, new_content)
+
+
+def sed(cmd: str, file_name: str):
+    cmd_match = re.match(r'^([sdia])/([^/]+)/?([^/]+)?$', cmd)
+    if cmd_match:
+        cmd_type = cmd_match.group(1)
+        cmd_arg1 = cmd_match.group(2)
+        cmd_arg2 = cmd_match.group(3)
+        if cmd_arg2:
+            eval(cmd_type + "('" + cmd_arg1 + "', '" +
+                 cmd_arg2 + "', '" + file_name + "')")
+        else:
+            eval(cmd_type + "('" + cmd_arg1 + "', '" + file_name + "')")
+    else:
+        print('Command is Error!')
+
+
+# sed('s/[0-9]+/NUM', 'Tools\FileMaster\File.txt')
+# sed('d/NUM', 'Tools\FileMaster\File.txt')
+# sed('i/[0-9]+/NUM: ', 'Tools\FileMaster\File.txt')
+# sed('a/[0-9]+/ :NUM', 'Tools\FileMaster\File.txt')
