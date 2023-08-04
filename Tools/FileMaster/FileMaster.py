@@ -20,9 +20,9 @@ class FileTerminal(cmd.Cmd):
         items = os.listdir(current_dir)
         # 过滤出文件和文件夹
         folders = [item for item in items if os.path.isdir(
-            os.path.join(current_dir, item))]
+            os.path.join(self.path, item))]
         files = [item for item in items if os.path.isfile(
-            os.path.join(current_dir, item))]
+            os.path.join(self.path, item))]
         # 显示文件夹和文件
         print(f"Folder：{' '.join(folder for folder in folders)}")
         print(f"File：{' '.join(file for file in files)}")
