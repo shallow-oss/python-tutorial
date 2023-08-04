@@ -266,85 +266,7 @@ print(person1 >= person2)  # 输出: False
 
 赋值语句的使用消除了 lambda 表达式相对于显式 def 语句的唯一好处，那就是它能够嵌入到一个更大的表达式里面。
 
-# 2023-8-2-----------------------------------------------------
-
-* 捕获的异常要说明 "错误出在哪里了 ？" 而不是仅仅说明 "哎呀！出问题了！"。
-
-* 正确使用异常链接。在 Python 3 中，应该使用 "raise X from Y" 来表示显式替换并且不会丢失原始追溯。
-
-当有意替换一个内部异常(Python 2: "raise X", Python 3.3+: raise X from Non)时，请确保将相关的详细信息转移到新的异常(例如，将 KeyError 转换为 AttributeError 时保留属性名称，或将原始异常的文本嵌入到新的异常消息中)。
-
-* 当在 Python 2 中抛出异常时，使用 <code>raise ValueError('message')</code> 而不是老式的 <code>raise ValueError, 'message'</code>，后者已经在 Python 3 中废弃。由于使用了括号，可以避免行连续符的使用。
-
-* 当捕获异常时，尽可能提及具体的异常而不是使用一个赤裸裸的 except 子句。一个裸露的 except: 子句将捕获 SystemExit 和 KeyboardInterrupt 异常，这样的话就难于使用 control-c 中断程序，并可能掩盖其他问题。如果想要捕获标志程序错误的所有异常的话，用 except Exception:(裸露的 except 子句等同于 except BaseException:)：
-
-```python
-try:
-    import platform_specific_module
-except ImportError:
-    platform_specific_module = None
-```
-
-<blockquote>
-
-一个很好的经验法则是将裸露的 except 子句仅用于以下两种情况：  
-
-1、If the exception handler will be printing out or logging the traceback; at least the user will be aware that an error has occurred.
-
-2、If the code needs to do some cleanup work, but then lets the exception propagate upwards with raise . try...finally can be a better way to handle this case.
-
-</blockquote>
-
-* 当对捕获的异常重命名时，使用 2.6 版本引入的语法：
-
-```python
-try:
-    process_data()
-except Exception as exc:
-    raise DataProcessingFailedError(str(exc))
-```
-
-* 当捕获操作系统错误时，相对于内置的 errno 值，最好是使用 Python 3.3 中介绍的显式异常层次结构。
-
-* 对于所有的 try/except 子句，将 try 子句限制为必需的绝对最小代码量避免隐藏 bug：
-
-```python
-是：
-
-    try:
-        value = collection[key]
-    except KeyError:
-        return key_not_found(key)
-    else:
-        return handle_value(value)
-
-否：
-
-    try:
-        # Too broad!
-        return handle_value(collection[key])
-    except KeyError:
-        # Will also catch KeyError raised by handle_value()
-        return key_not_found(key)
-```
-
-* 特定代码块的本地资源使用 with 语句确保使用后立即释放，不能自动释放的使用 try/finally 也可以。
-
-* 除了申请和释放资源，任何时候都应该使用单独的函数和方法调用 Context managers，例如：
-
-```python
-是：
-
-    with conn.begin_transaction():
-        do_stuff_in_transaction(conn)
-
-否：
-
-    with conn:
-        do_stuff_in_transaction(conn) 
-```
-
-* 函数返回语句要一致。在一个函数内的所有返回语句要么都返回一个表达式，要么都不返回。如果任何一个返回语句返回了表达式，那么其他任何没有返回值的语句应该明确声明为 return None。在函数结束部分必须出现返回语句：
+* **函数返回语句要一致**。在一个函数内的所有返回语句要么都返回一个表达式，要么都不返回。如果任何一个返回语句返回了表达式，那么其他任何没有返回值的语句应该明确声明为 return None。在函数结束部分必须出现返回语句：
 ```python
 是：
 
@@ -373,14 +295,14 @@ except Exception as exc:
 
 * 相对于 string 模块，使用 string 方法要快的多并且与 unicode strings 共享相同的 API。当然了，除了需要考虑 2.0 版本之前 python 代码向后兼容性的情况。
 
-* 使用 ''.startswith() 和 ''.endswith() 而不是字符串切片来检查前缀或后缀，例如：
+* 使用 **''.startswith() 和 ''.endswith()** 而不是字符串切片来检查**前缀或后缀**，例如：
 
 ```python
 是： if foo.startswith('bar'):
 否： if foo[:3] == 'bar':
 ```
 
-* 对象类型比较应该使用isinstance() 而不是直接比较：
+* **对象类型**比较应该使用**isinstance()** 而不是直接比较：
 
 ```python
 是： if isinstance(obj, int):

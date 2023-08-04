@@ -36,6 +36,7 @@ class FileTerminal(cmd.Cmd):
         except OSError:
             print("Please try again!")
         else:
+            # 改变工作目录
             self.path = os.getcwd()
 
     def do_mkdir(self, dir_name: str):
@@ -98,7 +99,7 @@ class FileTerminal(cmd.Cmd):
             print("example: sed COMMAND FILE")
 
     def do_quit(self, _):
-        """退出终端"""
+        # 退出终端
         return True
 
     def do_help(self, arg: str):
