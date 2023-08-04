@@ -81,7 +81,7 @@ class FileTerminal(cmd.Cmd):
                 file = open(file_name, "w")
                 file.close()
 
-    def do_cat(self, file_name):
+    def do_cat(self, file_name: str):
         try:
             with open(file_name, 'r', encoding='utf-8') as file:
                 content = file.read()
