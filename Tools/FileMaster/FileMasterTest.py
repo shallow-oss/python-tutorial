@@ -11,9 +11,9 @@ class FileTerminalTest(unittest.TestCase):
         self.path = 'Tools\FileMaster\TestEnvironment'
 
     def test_pwd(self):
-        with patch('sys.stdout', new=StringIO()) as fake_out:
+        with patch('sys.stdout', new=StringIO()) as mock_stdout:
             self.file_terminal.do_pwd('')
-            output = fake_out.getvalue().strip()
+            output = mock_stdout.getvalue().strip()
             expected_output = os.getcwd()
             self.assertEqual(output, expected_output)
 
