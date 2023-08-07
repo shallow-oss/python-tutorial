@@ -10,6 +10,9 @@ class FileTerminal(cmd.Cmd):
     prompt = '>> '
     path = os.getcwd()
 
+    def preloop(self):
+        os.chdir(self.path)
+
     def do_pwd(self, _):
         print(self.path)
 
@@ -29,6 +32,7 @@ class FileTerminal(cmd.Cmd):
 
     def do_cd(self, work_directory: str):
         try:
+            os.chdir(self.path)
             # 改变当前工作目录
             os.chdir(work_directory)
         except FileNotFoundError:
