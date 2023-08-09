@@ -15,3 +15,5 @@
   7. [NumPy](NumPy/NumPy.md)
 
   8. [Regular-expressions](RegularExpressions/Regular-expressions.md)
+
+  9. [Matplotlib](Matplotlib/Matplotlib.md)
