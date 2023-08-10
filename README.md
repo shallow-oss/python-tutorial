@@ -17,3 +17,5 @@
   8. [Regular-expressions](RegularExpressions/Regular-expressions.md)
 
   9. [Matplotlib](Matplotlib/Matplotlib.md)
+   
+  10. [RL](https://datawhalechina.github.io/easy-rl/#/)
