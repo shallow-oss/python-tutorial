@@ -1,6 +1,26 @@
 import re
 
 
+class Command:
+    def command_s(self, pattern, content, command_content):
+        new_content = re.sub(pattern, command_content, content)
+        return new_content
+
+    def command_d(self, pattern, content, command_content):
+        new_content = re.sub(pattern, '', content)
+        return new_content
+
+    def command_i(self, pattern, content, command_content):
+        new_content = re.sub(
+            pattern, lambda match: i_insert(match, command_content), content)
+        return new_content
+
+    def command_a(self, pattern, content, command_content):
+        new_content = re.sub(
+            pattern, lambda match: insert_a(match, command_content), content)
+        return new_content
+
+
 def read_file(file_name: str) -> str:
     try:
         with open(file_name, 'r') as file:
@@ -34,20 +54,17 @@ def sed(command: str, file_name: str) -> None:
         command_type = command_match.group(1)
         command_pattern = command_match.group(2)
         command_content = command_match.group(3)
+        cmd = Command()
+        methods = {
+            's': cmd.command_s,
+            'd': cmd.command_d,
+            'i': cmd.command_i,
+            'a': cmd.command_a
+        }
         # 读取文件内容
         content = read_file(file_name)
-        match command_type:
-            case 's':
-                new_content = re.sub(command_pattern, command_content, content)
-            case 'd':
-                new_content = re.sub(command_pattern, '', content)
-            case 'i':
-                new_content = re.sub(
-                    command_pattern, lambda match: i_insert(match, command_content), content)
-            case 'a':
-                new_content = re.sub(
-                    command_pattern, lambda match: insert_a(match, command_content), content)
-        # 保存新的文件内容
+        new_content = methods[command_type](
+            pattern=command_pattern, content=content, command_content=command_content)
         write_file(file_name, new_content)
     else:
         print('Command is error!')

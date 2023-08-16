@@ -1,7 +1,6 @@
 import unittest
 import os
 import shutil
-
 from unittest.mock import patch
 from io import StringIO
 from FileMaster import FileTerminal

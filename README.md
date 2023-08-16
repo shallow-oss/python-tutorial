@@ -17,3 +17,9 @@
   8. [Regular-expressions](RegularExpressions/Regular-expressions.md)
 
   9. [Matplotlib](Matplotlib/Matplotlib.md)
+   
+  10. [RL](https://datawhalechina.github.io/easy-rl/#/)
+
+  11. [AI算法工程师手册](https://www.bookstack.cn/read/huaxiaozhuan-ai/README.md)
+
+  12. [Matplotlib](https://datawhalechina.github.io/fantastic-matplotlib/index.html)
